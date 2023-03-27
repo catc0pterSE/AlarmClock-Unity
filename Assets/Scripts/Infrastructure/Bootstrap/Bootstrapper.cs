@@ -1,13 +1,17 @@
 ﻿using Data.DataSource.LocalTimeDataSource;
+using Data.Repository;
+using Data.Repository.Alarm;
+using Data.Repository.CurrentTime;
+using Data.UseCase;
 using Domain.Synchroniser;
-using Domain.TimeProvider;
-using Domain.UseCase;
 using Infrastructure.Factory;
 using Infrastructure.Provider;
-using Infrastructure.TimeService;
+using Infrastructure.Service.InputService;
+using Infrastructure.Service.TimeService;
 using Presentation.View;
 using Presentation.ViewModel;
 using UnityEngine;
+using Utility.Extensions;
 
 namespace Infrastructure.Bootstrap
 {
@@ -15,25 +19,35 @@ namespace Infrastructure.Bootstrap
     {
         [SerializeField] private int _synchronizeIntervalMinutes = 60;
 
-        private void Awake()
-        {
+        private void Awake() =>
             BootApp();
-        }
 
         private void BootApp()
         {
             IAssetProvider assetProvider = new AssetProvider();
             IGameObjectFactory gameObjectFactory = new GameObjectFactory(assetProvider);
-            ITimeService timeService = new TimeService.TimeService();
+            ITimeService timeService = new TimeService();
             ILocalTimeDataSource localTimeDataSource = new LocalTimeDataSource(timeService);
-            ICurrentTimeProvider currentTimeProvider = new CurrentTimeProvider(localTimeDataSource);
+            ICurrentTimeRepository currentTimeRepository = new CurrentTimeRepository(localTimeDataSource);
             CurrentTimeSynchronizer currentTimeSynchronizer =
-                new CurrentTimeSynchronizer(currentTimeProvider, timeService, _synchronizeIntervalMinutes);
-            ArrowsViewModel arrowsViewModel = new ArrowsViewModel(timeService, new GetCurrentTimeUseCase(currentTimeProvider));
-            TextViewModel textViewModel = new TextViewModel(timeService, new GetCurrentTimeUseCase(currentTimeProvider));
-            ClockView clockView = gameObjectFactory.CreateClockView();
-            clockView.Construct(arrowsViewModel, textViewModel);
-            currentTimeProvider.Synchronize();
+                new CurrentTimeSynchronizer(currentTimeRepository, timeService, _synchronizeIntervalMinutes);
+            CurrentTimeDisplayingViewModel currentTimeDisplayingViewModel =
+                new CurrentTimeDisplayingViewModel(timeService, new GetCurrentTimeUseCase(currentTimeRepository));
+            IAlarmTimeRepository alarmTimeRepository = new AlarmTimeRepository();
+            AlarmSettingViewModel alarmSettingViewModel = new AlarmSettingViewModel
+            (
+                new GetAlarmTimeUseCase(alarmTimeRepository),
+                new SaveAlarmTimeUseCase(alarmTimeRepository)
+            );
+            IInputService inputService = new SimpleInputService();
+            AlarmClockViewModel alarmClockViewModel = new AlarmClockViewModel(
+                new GetCurrentTimeUseCase(currentTimeRepository),
+                new GetAlarmTimeUseCase(alarmTimeRepository), timeService);
+            AlarmClockView alarmClockView = gameObjectFactory.CreateAlarmClockView();
+            alarmClockView.Construct(alarmClockViewModel, currentTimeDisplayingViewModel, alarmSettingViewModel,
+                inputService);
+            currentTimeRepository.Synchronize();
+            alarmClockView.EnableObject();
         }
     }
 }

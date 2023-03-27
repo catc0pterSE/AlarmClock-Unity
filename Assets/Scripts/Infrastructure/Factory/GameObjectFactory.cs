@@ -1,5 +1,6 @@
 ﻿using System;
 using Infrastructure.Provider;
+using Presentation;
 using Presentation.View;
 using UnityEngine;
 using Utility.Constants;
@@ -15,11 +16,11 @@ namespace Infrastructure.Factory
             _assetProvider = assetProvider;
         }
 
-        public ClockView CreateClockView()
+        public AlarmClockView CreateAlarmClockView()
         {
-            GameObject prefab = _assetProvider.Load(ResourcePaths.ClockViewPath);
-            return GameObject.Instantiate(prefab).GetComponent<ClockView>() ??
-                   throw new NullReferenceException("Prefab has no ClockView component");
+            GameObject prefab = _assetProvider.Load(ResourcePaths.AlarmClockViewPath);
+            return GameObject.Instantiate(prefab).GetComponent<AlarmClockView>() ??
+                   throw new NullReferenceException("Prefab has no AlarmClockView component");
         }
     }
 }

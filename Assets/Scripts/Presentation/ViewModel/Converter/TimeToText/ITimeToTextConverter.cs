@@ -4,6 +4,8 @@ namespace Presentation.ViewModel.Converter.TimeToText
 {
     public interface ITimeToTextConverter
     {
-        public string Convert(DateTime dateTime);
+        public string ConvertHours(int hours);
+        public string ConvertMinutes(int minutes);
+        public string ConvertSeconds(int seconds);
     }
 }

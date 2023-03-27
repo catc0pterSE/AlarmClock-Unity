@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System;
 using Cysharp.Threading.Tasks;
-using Data.TimeMapper;
+using Data.DataSource.Mapper.WebTimeMapper;
 using Network;
+using Network.Query;
 using UnityEngine;
 
 namespace Data.DataSource.RemoteDataSource
@@ -10,10 +11,10 @@ namespace Data.DataSource.RemoteDataSource
     public class RemoteTimeDataSource<T> : IRemoteTimeDataSource where T : class
     {
         private readonly Query _query = new Query();
-        private readonly ITimeMapper<T> _mapper;
+        private readonly IWebDtoToDateTimeMapper<T> _mapper;
         private readonly string _url;
 
-        protected RemoteTimeDataSource(ITimeMapper<T> mapper, string url)
+        protected RemoteTimeDataSource(IWebDtoToDateTimeMapper<T> mapper, string url)
         {
             _mapper = mapper;
             _url = url;
@@ -23,7 +24,6 @@ namespace Data.DataSource.RemoteDataSource
         {
             string? json = await _query.GetJson(_url);
             
-
             if (string.IsNullOrEmpty(json))
                 throw new NullReferenceException($"{GetType()} {_url} json is null ");
 

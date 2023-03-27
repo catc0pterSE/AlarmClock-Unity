@@ -4,6 +4,8 @@ namespace Presentation.ViewModel.Converter.TimeToAngles
 {
     public interface ITimeToArrowAnglesConverter
     {
-        public ArrowAngles Convert(DateTime dateTime);
+        public float ConvertHours(float hours);
+        public float ConvertMinutes(float minutes);
+        public float ConvertSeconds(float seconds);
     }
 }

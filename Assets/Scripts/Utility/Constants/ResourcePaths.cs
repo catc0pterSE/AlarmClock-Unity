@@ -2,6 +2,6 @@
 {
     public static class ResourcePaths
     {
-        public const string ClockViewPath = "ClockView";
+        public const string AlarmClockViewPath = "AlarmClockView";
     }
 }

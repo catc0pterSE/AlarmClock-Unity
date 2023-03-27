@@ -1,6 +1,7 @@
 ﻿using System;
-using Infrastructure.TimeService;
+using Infrastructure.Service.TimeService;
 using Modules;
+using Modules.LiveData;
 
 namespace Data.DataSource.LocalTimeDataSource
 {

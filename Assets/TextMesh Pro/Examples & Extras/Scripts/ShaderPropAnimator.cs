@@ -37,7 +37,7 @@ namespace TMPro.Examples
 
             while (true)
             {
-                //lightAngle = (m_Material.GetFloat(ShaderPropertyIDs.ID_LightAngle) + Time.deltaTime) % 6.2831853f;
+                //lightAngle = (m_Material.GetFloat(ShaderPropertyIDs.ID_LightAngle) + _time.deltaTime) % 6.2831853f;
                 //m_Material.SetFloat(ShaderPropertyIDs.ID_LightAngle, lightAngle);
 
                 glowPower = GlowCurve.Evaluate(m_frame);

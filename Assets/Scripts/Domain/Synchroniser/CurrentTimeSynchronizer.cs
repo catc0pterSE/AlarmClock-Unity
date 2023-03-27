@@ -1,19 +1,20 @@
 ﻿using System;
-using Domain.TimeProvider;
-using Infrastructure.TimeService;
+using Data.Repository;
+using Data.Repository.CurrentTime;
+using Infrastructure.Service.TimeService;
 
 namespace Domain.Synchroniser
 {
     public class CurrentTimeSynchronizer
     {
-        private readonly ICurrentTimeProvider _currentTimeProvider;
+        private readonly ICurrentTimeRepository _currentTimeRepository;
         private readonly ITimeService _timeService;
         private readonly int _synchroniseIntervalMinutes;
 
-        public CurrentTimeSynchronizer(ICurrentTimeProvider currentTimeProvider, ITimeService timeService,
+        public CurrentTimeSynchronizer(ICurrentTimeRepository currentTimeRepository, ITimeService timeService,
             int synchroniseIntervalMinutes)
         {
-            _currentTimeProvider = currentTimeProvider;
+            _currentTimeRepository = currentTimeRepository;
             _timeService = timeService;
             _synchroniseIntervalMinutes = synchroniseIntervalMinutes;
 
@@ -28,7 +29,7 @@ namespace Domain.Synchroniser
             bool needToSynchronise = TimeSpan.FromMilliseconds(millisecondsPassed) >=
                                      TimeSpan.FromMinutes(_synchroniseIntervalMinutes);
             if (needToSynchronise)
-                _currentTimeProvider.Synchronize();
+                _currentTimeRepository.Synchronize();
         }
     }
 }

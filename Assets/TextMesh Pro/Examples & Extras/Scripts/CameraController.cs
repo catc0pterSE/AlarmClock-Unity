@@ -102,7 +102,7 @@ namespace TMPro.Examples
                 {
                     // Using Smoothing
                     cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, desiredPosition, ref currentVelocity, MovementSmoothingValue * Time.fixedDeltaTime);
-                    //cameraTransform.position = Vector3.Lerp(cameraTransform.position, desiredPosition, Time.deltaTime * 5.0f);
+                    //cameraTransform.position = Vector3.Lerp(cameraTransform.position, desiredPosition, _time.deltaTime * 5.0f);
                 }
                 else
                 {

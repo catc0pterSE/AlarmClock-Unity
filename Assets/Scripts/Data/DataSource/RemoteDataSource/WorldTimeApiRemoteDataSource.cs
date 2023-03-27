@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Data.TImeDto;
-using Data.TimeMapper;
+using Data.DataSource.Dto.WebTImeDto;
+using Data.DataSource.Mapper.WebTimeMapper;
 
 namespace Data.DataSource.RemoteDataSource
 {
@@ -8,7 +8,7 @@ namespace Data.DataSource.RemoteDataSource
     {
         public WorldTimeApiRemoteDataSource() : base
         (
-            new WorldTimeApiMapper(),
+            new WorldTimeApiDtoToDateTimeMapper(),
             "http://worldtimeapi.org/api/ETC/UTC"
         )
         {

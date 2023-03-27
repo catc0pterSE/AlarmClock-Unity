@@ -11,9 +11,9 @@ namespace Utility.Extensions
             monoBehaviour.gameObject.SetActive(true);
 
         public static void DisableComponent(this MonoBehaviour monoBehaviour) =>
-            monoBehaviour.enabled = true;
+            monoBehaviour.enabled = false;
 
         public static void DisableObject(this MonoBehaviour monoBehaviour) =>
-            monoBehaviour.gameObject.SetActive(true);
+            monoBehaviour.gameObject.SetActive(false);
     }
 }

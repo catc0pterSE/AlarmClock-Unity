@@ -4,16 +4,13 @@ namespace Presentation.ViewModel.Converter.TimeToText
 {
     public class SimpleTimeToTextConverter : ITimeToTextConverter
     {
-        public string Convert(DateTime dateTime)
-        {
-            string hours = dateTime.Hour.ToString().Length>1? $"{dateTime.Hour}": $"0{dateTime.Hour}";
-            string minutes = dateTime.Minute.ToString().Length>1? $"{dateTime.Minute}": $"0{dateTime.Minute}";
-            string seconds = dateTime.Second.ToString().Length>1? $"{dateTime.Second}": $"0{dateTime.Second}";
+        public string ConvertHours(int hours) =>
+            hours.ToString().PadLeft(2, '0');
 
-            return $"{hours}:{minutes}:{seconds}";
-        }
-           
+        public string ConvertMinutes(int minutes) =>
+            minutes.ToString().PadLeft(2, '0');
 
-
+        public string ConvertSeconds(int seconds) =>
+            seconds.ToString().PadLeft(2, '0');
     }
 }

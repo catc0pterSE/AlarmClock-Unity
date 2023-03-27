@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Data.TImeDto;
-using Data.TimeMapper;
+using Data.DataSource.Dto.WebTImeDto;
+using Data.DataSource.Mapper.WebTimeMapper;
 
 namespace Data.DataSource.RemoteDataSource
 {
@@ -8,8 +8,8 @@ namespace Data.DataSource.RemoteDataSource
     {
         public TimeApiRemoteDataSource() : base
         (
-            new TimeApiMapper(),
-            "https://timeapi.io/api/Time/current/zone?timeZone=UTC"
+            new TimeApiDtoToDateTimeMapper(),
+            "https://timeapi.io/api/_time/current/zone?timeZone=UTC"
         )
         {
         }
