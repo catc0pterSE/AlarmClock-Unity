@@ -39,7 +39,7 @@ namespace Domain.Model
             Seconds = _textToNumberConverter.Convert(secondsText);
         }
 
-        public Time(int hours, int minutes, int seconds, int milliseconds)
+        private Time(int hours, int minutes, int seconds, int milliseconds)
         {
             Seconds = seconds + (float)milliseconds / NumericConstants.MillisecondsInSecond;
             Minutes = minutes + Seconds / NumericConstants.SecondsInMinute;

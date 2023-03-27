@@ -1,6 +1,6 @@
 ﻿namespace Domain.Model
 {
-    public class TimeArrowAngles
+    public struct TimeArrowAngles
     {
         public TimeArrowAngles(float hoursArrowAngle, float minutesArrowAngle, float secondsArrowAngle)
         {

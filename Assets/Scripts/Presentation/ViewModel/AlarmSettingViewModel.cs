@@ -6,14 +6,14 @@ namespace Presentation.ViewModel
 {
     public class AlarmSettingViewModel
     {
-        public SaveAlarmTimeUseCase SaveAlarmTimeUseCase { get; }
+        private readonly SaveAlarmTimeUseCase _saveAlarmTimeUseCase;
         private readonly GetAlarmTimeUseCase _getAlarmTimeUseCase;
 
         private MutableLiveData<Time> _alarmTime = new MutableLiveData<Time>();
 
         public AlarmSettingViewModel(GetAlarmTimeUseCase getAlarmTimeUseCase, SaveAlarmTimeUseCase saveAlarmTimeUseCase)
         {
-            SaveAlarmTimeUseCase = saveAlarmTimeUseCase;
+            _saveAlarmTimeUseCase = saveAlarmTimeUseCase;
             _getAlarmTimeUseCase = getAlarmTimeUseCase;
         }
 
@@ -29,6 +29,6 @@ namespace Presentation.ViewModel
             _alarmTime.Value = _getAlarmTimeUseCase.Invoke() ?? new Time();
 
         public void Save() =>
-            SaveAlarmTimeUseCase.Invoke(_alarmTime.Value);
+            _saveAlarmTimeUseCase.Invoke(_alarmTime.Value);
     }
 }

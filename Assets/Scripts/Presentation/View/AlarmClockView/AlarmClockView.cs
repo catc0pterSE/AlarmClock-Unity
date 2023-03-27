@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Service.InputService;
+using Presentation.View.AlarmClockView.States;
 using Presentation.View.AlarmSetting;
 using Presentation.View.CurrentTimeDisplaying;
 using Presentation.ViewModel;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utility.Extensions;
 
-namespace Presentation.View
+namespace Presentation.View.AlarmClockView
 {
     public class AlarmClockView : MonoBehaviour
     {
@@ -99,60 +100,5 @@ namespace Presentation.View
             _alarm.Stop();
         }
             
-    }
-
-    public class CurrentTimeDisplayingState : IAlarmClockState
-    {
-        private readonly AlarmClockView _alarmClockView;
-
-        public CurrentTimeDisplayingState(AlarmClockView alarmClockView)
-        {
-            _alarmClockView = alarmClockView;
-            _alarmClockView.DisplayCurrentTime();
-        }
-
-        public void OnAlarmButtonClicked()
-        {
-            _alarmClockView.HideCurrentTime();
-            _alarmClockView.EnterSettingAlarmState();
-        }
-    }
-
-    public class RingingState : IAlarmClockState
-    {
-        private readonly AlarmClockView _alarmClockView;
-
-        public RingingState(AlarmClockView alarmClockView)
-        {
-            _alarmClockView = alarmClockView;
-        }
-
-        public void OnAlarmButtonClicked()
-        {
-            _alarmClockView.MuteAlarm();
-            _alarmClockView.EnterCurrentTimeDisplayingState();
-        }
-    }
-
-    public class SettingAlarmState : IAlarmClockState
-    {
-        private readonly AlarmClockView _alarmClockView;
-
-        public SettingAlarmState(AlarmClockView alarmClockView)
-        {
-            _alarmClockView = alarmClockView;
-            _alarmClockView.StartSettingAlarm();
-        }
-
-        public void OnAlarmButtonClicked()
-        {
-            _alarmClockView.StopSettingAlarm();
-            _alarmClockView.EnterCurrentTimeDisplayingState();
-        }
-    }
-
-    public interface IAlarmClockState
-    {
-        public void OnAlarmButtonClicked();
     }
 }
