@@ -1,4 +1,4 @@
-﻿using Data.UseCase;
+﻿using Data.Repository.CurrentTime;
 using Domain.Model;
 using Infrastructure.Service.TimeService;
 using Modules.LiveData;
@@ -8,22 +8,28 @@ namespace Presentation.ViewModel
     public class CurrentTimeDisplayingViewModel
     {
         private readonly ITimeService _timeService;
-        private readonly GetCurrentTimeUseCase _getCurrentTimeUseCase;
+        private readonly ICurrentTimeProvider _currentTimeProvider;
         private MutableLiveData<Time> _time = new MutableLiveData<Time>();
 
-        public CurrentTimeDisplayingViewModel(ITimeService timeService, GetCurrentTimeUseCase getCurrentTimeUseCase)
+        public CurrentTimeDisplayingViewModel(ITimeService timeService, ICurrentTimeProvider currentTimeProvider)
         {
             _timeService = timeService;
-            _getCurrentTimeUseCase = getCurrentTimeUseCase;
-            ObserveTimeService();
+            _currentTimeProvider = currentTimeProvider;
+            SubscribeOnTimeService();
         }
 
+        ~CurrentTimeDisplayingViewModel() =>
+            UnsubscribeFromTimeService();
+        
         public LiveData<Time> Time => _time;
 
-        private void ObserveTimeService() =>
-            _timeService.MillisecondsPassed.Observe(OnTimeUpdated);
-
-        private void OnTimeUpdated(float _) =>
-            _time.Value = _getCurrentTimeUseCase.Invoke();
+        private void SubscribeOnTimeService() =>
+            _timeService.CurrentTimeepositoryUpdated += OnTimeUpdated;
+        
+        private void UnsubscribeFromTimeService() =>
+            _timeService.CurrentTimeepositoryUpdated -= OnTimeUpdated;
+        
+        private void OnTimeUpdated() =>
+            _time.Value = _currentTimeProvider.CurrentTime;
     }
 }

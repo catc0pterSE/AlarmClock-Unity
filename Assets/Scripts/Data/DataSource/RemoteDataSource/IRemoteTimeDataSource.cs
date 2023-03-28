@@ -6,6 +6,6 @@ namespace Data.DataSource.RemoteDataSource
 {
     public interface IRemoteTimeDataSource
     {
-        public UniTask TryGetDateTime(Action<DateTime> callback);
+        public UniTask TryGetDateTimeAsync(Action<DateTime> callback);
     }
 }

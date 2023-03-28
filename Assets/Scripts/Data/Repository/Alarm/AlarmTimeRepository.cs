@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Data.DataSource.Dto.TimeDto;
+﻿using Data.DataSource.Dto.TimeDto;
 using Data.DataSource.Mapper.AlarmTimeMapper;
 using UnityEngine;
 using Time = Domain.Model.Time;
@@ -9,8 +8,8 @@ namespace Data.Repository.Alarm
     public class AlarmTimeRepository : IAlarmTimeRepository
     {
         private const string TimeJsonKey = "AlarmTime";
-        private readonly ITimeToDtoMapper _timeToDtoMapper = new TimeToDtoMapper();
-        private readonly IDtoToTimeMapper _dtoToTimeMapper = new DtoToTimeMapper();
+        private readonly TimeToDtoMapper _timeToDtoMapper = new TimeToDtoMapper();
+        private readonly DtoToTimeMapper _dtoToTimeMapper = new DtoToTimeMapper();
 
         private Time _time;
 

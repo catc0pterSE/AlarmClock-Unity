@@ -1,35 +1,44 @@
 ﻿using System;
-using Data.Repository;
-using Data.Repository.CurrentTime;
+using Data.DataSource.LocalTimeDataSource;
+using Data.UseCase;
 using Infrastructure.Service.TimeService;
 
 namespace Domain.Synchroniser
 {
     public class CurrentTimeSynchronizer
     {
-        private readonly ICurrentTimeRepository _currentTimeRepository;
+        private readonly UpdateRemoteTypeUseCase _updateRemoteTypeUseCase;
+        private readonly ILocalTimeDataSource _localTimeDataSource;
         private readonly ITimeService _timeService;
         private readonly int _synchroniseIntervalMinutes;
 
-        public CurrentTimeSynchronizer(ICurrentTimeRepository currentTimeRepository, ITimeService timeService,
+        public CurrentTimeSynchronizer(UpdateRemoteTypeUseCase updateRemoteTypeUseCase,
+            ILocalTimeDataSource localTimeDataSource, ITimeService timeService,
             int synchroniseIntervalMinutes)
         {
-            _currentTimeRepository = currentTimeRepository;
+            _updateRemoteTypeUseCase = updateRemoteTypeUseCase;
+            _localTimeDataSource = localTimeDataSource;
             _timeService = timeService;
             _synchroniseIntervalMinutes = synchroniseIntervalMinutes;
 
-            ObserveOnTimeService();
+            ObserveLocalTimeDataService();
         }
 
-        private void ObserveOnTimeService() =>
-            _timeService.MillisecondsPassed.Observe(OnTimeServiceUpdated);
-
-        private void OnTimeServiceUpdated(float millisecondsPassed)
+        public void Synchronize()
         {
-            bool needToSynchronise = TimeSpan.FromMilliseconds(millisecondsPassed) >=
-                                     TimeSpan.FromMinutes(_synchroniseIntervalMinutes);
-            if (needToSynchronise)
-                _currentTimeRepository.Synchronize();
+            _updateRemoteTypeUseCase.Invoke();
+            _timeService.Reset();
+        }
+
+        private void ObserveLocalTimeDataService() =>
+            _localTimeDataSource.LocalPassed.Observe(OnTimeServiceUpdated);
+
+        private void OnTimeServiceUpdated(TimeSpan localPassed)
+        {
+            if (localPassed >= TimeSpan.FromMinutes(_synchroniseIntervalMinutes) == false)
+                return;
+
+            Synchronize();
         }
     }
 }

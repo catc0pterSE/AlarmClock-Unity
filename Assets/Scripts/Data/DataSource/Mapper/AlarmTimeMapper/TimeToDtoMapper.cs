@@ -3,7 +3,7 @@ using Domain.Model;
 
 namespace Data.DataSource.Mapper.AlarmTimeMapper
 {
-    public class TimeToDtoMapper : ITimeToDtoMapper
+    public class TimeToDtoMapper
     {
         public TimeDto Map(Time time)
         {

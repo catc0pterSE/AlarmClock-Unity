@@ -3,9 +3,8 @@ using Domain.Model;
 
 namespace Data.Repository.CurrentTime
 {
-    public interface ICurrentTimeRepository
+    public interface ICurrentTimeProvider
     {
         public Time CurrentTime { get; }
-        public UniTask Synchronize();
     }
 }

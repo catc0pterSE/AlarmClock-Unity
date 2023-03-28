@@ -1,10 +1,11 @@
-﻿using Modules.LiveData;
+﻿using System;
+using Modules.LiveData;
 
 namespace Infrastructure.Service.TimeService
 {
     public interface ITimeService
     {
-        public LiveData<float> MillisecondsPassed { get; }
+        public event Action CurrentTimeepositoryUpdated;
         public void Reset();
     }
 }

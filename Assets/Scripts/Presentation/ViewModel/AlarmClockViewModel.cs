@@ -1,34 +1,40 @@
 ﻿using System;
-using System.Threading;
+using Data.Repository.CurrentTime;
 using Data.UseCase;
 using Infrastructure.Service.TimeService;
-using UnityEngine;
 
 namespace Presentation.ViewModel
 {
     public class AlarmClockViewModel
     {
-        private readonly GetCurrentTimeUseCase _getCurrentTimeUseCase;
+        private readonly ICurrentTimeProvider _currentTimeProvider;
         private readonly GetAlarmTimeUseCase _getAlarmTimeUseCase;
         private readonly ITimeService _timeService;
 
-        public AlarmClockViewModel(GetCurrentTimeUseCase getCurrentTimeUseCase, GetAlarmTimeUseCase getAlarmTimeUseCase, ITimeService timeService)
+        public AlarmClockViewModel(ICurrentTimeProvider currentTimeProvider, GetAlarmTimeUseCase getAlarmTimeUseCase,
+            ITimeService timeService)
         {
-            _getCurrentTimeUseCase = getCurrentTimeUseCase;
+            _currentTimeProvider = currentTimeProvider;
             _getAlarmTimeUseCase = getAlarmTimeUseCase;
             _timeService = timeService;
-            ObserveTimeService();
+            SubscribeOnTimeService();
         }
+
+        ~AlarmClockViewModel() =>
+            UnsubscribeFromTimeService();
 
         public event Action AlarmTimeReached;
 
-        private void ObserveTimeService() =>
-            _timeService.MillisecondsPassed.Observe(OnTimeChanged);
+        private void SubscribeOnTimeService() =>
+            _timeService.CurrentTimeepositoryUpdated += OnTimeChanged;
 
-        private void OnTimeChanged(float _)
+        private void UnsubscribeFromTimeService() =>
+            _timeService.CurrentTimeepositoryUpdated -= OnTimeChanged;
+
+        private void OnTimeChanged()
         {
-           if (_getCurrentTimeUseCase.Invoke()==_getAlarmTimeUseCase.Invoke())
-               AlarmTimeReached?.Invoke();
+            if (_currentTimeProvider.CurrentTime == _getAlarmTimeUseCase.Invoke())
+                AlarmTimeReached?.Invoke();
         }
     }
 }

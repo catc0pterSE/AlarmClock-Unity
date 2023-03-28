@@ -1,7 +1,8 @@
 #nullable enable
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Modules.LiveData;
+using Data.DataSource.LocalTimeDataSource;
 using UnityEngine;
 using Utility.Constants;
 
@@ -9,18 +10,23 @@ namespace Infrastructure.Service.TimeService
 {
     public class TimeService : ITimeService
     {
-        private readonly MutableLiveData<float> _millisecondsPassed = new MutableLiveData<float>();
+        private readonly ILocalTimeDataSource _localTimeDataSource;
+        private float _millisecondsPassed;
         private CancellationTokenSource? _destroyCancellation;
 
-        public LiveData<float> MillisecondsPassed => _millisecondsPassed;
-
+        public TimeService(ILocalTimeDataSource localTimeDataSource) =>
+            _localTimeDataSource = localTimeDataSource;
+        
+        
         ~TimeService() =>
             _destroyCancellation?.Cancel();
+
+        public event Action? CurrentTimeepositoryUpdated;
 
         public void Reset()
         {
             StopCount();
-            _millisecondsPassed.Value = 0;
+            _millisecondsPassed = 0;
             StartCount();
         }
 
@@ -42,7 +48,9 @@ namespace Infrastructure.Service.TimeService
             while (cancellationToken.IsCancellationRequested == false)
             {
                 await UniTask.NextFrame();
-                _millisecondsPassed.Value += Time.unscaledDeltaTime * NumericConstants.MillisecondsInSecond;
+                _millisecondsPassed += Time.unscaledDeltaTime * NumericConstants.MillisecondsInSecond;
+                _localTimeDataSource.Update(_millisecondsPassed);
+                CurrentTimeepositoryUpdated?.Invoke();
             }
         }
     }

@@ -28,6 +28,9 @@ namespace Presentation.View.CurrentTimeDisplaying
 
         private void OnTimeChanged(Time time)
         {
+            if (time == null)
+                return;
+
             SetText(time.HoursText, time.MinutesText, time.SecondsText);
             RotateArrows(time.HourArrowAngle, time.MinuteArrowAngle, time.SecondArrowAngle);
         }

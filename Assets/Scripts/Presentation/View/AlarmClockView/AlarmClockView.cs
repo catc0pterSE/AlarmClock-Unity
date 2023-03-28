@@ -33,23 +33,27 @@ namespace Presentation.View.AlarmClockView
             _alarmSettingView.Construct(alarmSettingViewModel, inputService);
             EnterCurrentTimeDisplayingState();
 
-            if (gameObject.activeSelf) //TODO: meh
+            if (gameObject.activeSelf) 
                 SubscribeOnViewModel();
         }
 
         private void OnEnable()
         {
-            _alarmButton.onClick.AddListener(OnAlarmButtonClicked);
+            SubscribeOnAlarButton();
             SubscribeOnViewModel();
         }
 
-
         private void OnDisable()
         {
-            _alarmButton.onClick.AddListener(OnAlarmButtonClicked);
+            UnsubscribeFromAlarButton();
             UnsubscribeFromViewModel();
         }
+        
+        private void SubscribeOnAlarButton()=>
+            _alarmButton.onClick.AddListener(OnAlarmButtonClicked);
 
+        private void UnsubscribeFromAlarButton() =>
+            _alarmButton.onClick.RemoveListener(OnAlarmButtonClicked);
 
         private void SubscribeOnViewModel() =>
             _viewModel.AlarmTimeReached += OnAlarmTimeReached;

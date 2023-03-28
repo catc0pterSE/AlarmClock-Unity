@@ -1,15 +1,16 @@
 ﻿#nullable enable
 using Data.DataSource.Dto.WebTImeDto;
 using Data.DataSource.Mapper.WebTimeMapper;
+using Utility.Constants;
 
 namespace Data.DataSource.RemoteDataSource
 {
-    public class TimeApiRemoteDataSource : RemoteTimeDataSource<TimeApiDto>
+    public class TimeApiApiDataSource : ApiTimeDataSource<TimeApiDto>
     {
-        public TimeApiRemoteDataSource() : base
+        public TimeApiApiDataSource() : base
         (
             new TimeApiDtoToDateTimeMapper(),
-            "https://timeapi.io/api/_time/current/zone?timeZone=UTC"
+            ApiUrls.TimeApiUrl
         )
         {
         }
