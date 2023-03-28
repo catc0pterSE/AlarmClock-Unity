@@ -1,4 +1,4 @@
-﻿using Data.Repository.CurrentTime;
+﻿using Domain.CurrentTime;
 using Domain.Model;
 using Infrastructure.Service.TimeService;
 using Modules.LiveData;

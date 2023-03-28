@@ -3,7 +3,7 @@ using Data.DataSource.LocalTimeDataSource;
 using Data.UseCase;
 using Domain.Model;
 
-namespace Data.Repository.CurrentTime
+namespace Domain.CurrentTime
 {
     public class CurrentTimeProvider : ICurrentTimeProvider
     {

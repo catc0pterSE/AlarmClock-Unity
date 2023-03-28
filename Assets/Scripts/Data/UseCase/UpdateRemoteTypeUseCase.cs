@@ -1,4 +1,4 @@
-﻿using Data.Repository.RequestedTime;
+﻿using Data.Repository.RemoteTime;
 
 namespace Data.UseCase
 {

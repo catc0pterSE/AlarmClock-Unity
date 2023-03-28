@@ -1,6 +1,6 @@
 ﻿using System;
-using Data.Repository.CurrentTime;
 using Data.UseCase;
+using Domain.CurrentTime;
 using Infrastructure.Service.TimeService;
 
 namespace Presentation.ViewModel

@@ -1,7 +1,6 @@
-using Cysharp.Threading.Tasks;
 using Domain.Model;
 
-namespace Data.Repository.CurrentTime
+namespace Domain.CurrentTime
 {
     public interface ICurrentTimeProvider
     {

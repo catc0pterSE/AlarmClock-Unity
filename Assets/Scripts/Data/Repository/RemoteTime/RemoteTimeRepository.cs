@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Data.DataSource.RemoteDataSource;
 
-namespace Data.Repository.RequestedTime
+namespace Data.Repository.RemoteTime
 {
     public class RemoteTimeRepository : IRemoteTimeRepository
     {

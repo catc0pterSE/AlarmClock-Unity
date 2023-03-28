@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 
-namespace Data.Repository.RequestedTime
+namespace Data.Repository.RemoteTime
 {
     public interface IRemoteTimeRepository
     {

@@ -3,11 +3,11 @@ using Data.DataSource.Dto.WebTImeDto;
 using Data.DataSource.Mapper.WebTimeMapper;
 using Utility.Constants;
 
-namespace Data.DataSource.RemoteDataSource
+namespace Data.DataSource.RemoteDataSource.API
 {
-    public class TimeApiApiDataSource : ApiTimeDataSource<TimeApiDto>
+    public class TimeApiDataSource : ApiTimeDataSource<TimeApiDto>
     {
-        public TimeApiApiDataSource() : base
+        public TimeApiDataSource() : base
         (
             new TimeApiDtoToDateTimeMapper(),
             ApiUrls.TimeApiUrl

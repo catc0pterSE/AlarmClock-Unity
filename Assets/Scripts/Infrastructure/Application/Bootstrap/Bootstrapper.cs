@@ -1,9 +1,9 @@
 ﻿using Data.DataSource.LocalTimeDataSource;
 using Data.DataSource.RemoteDataSource;
 using Data.Repository.Alarm;
-using Data.Repository.CurrentTime;
-using Data.Repository.RequestedTime;
+using Data.Repository.RemoteTime;
 using Data.UseCase;
+using Domain.CurrentTime;
 using Domain.Synchroniser;
 using Infrastructure.Factory;
 using Infrastructure.Provider;

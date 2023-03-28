@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using Data.DataSource.RemoteDataSource.API;
 using UnityEngine;
 
 namespace Data.DataSource.RemoteDataSource
@@ -8,8 +9,8 @@ namespace Data.DataSource.RemoteDataSource
     {
         private readonly IRemoteTimeDataSource[] _apiDataSources = new IRemoteTimeDataSource[]
         {
-            new TimeApiApiDataSource(),
-            new WorldTimeApiApiDataSource()
+            new TimeApiDataSource(),
+            new WorldTimeApiDataSource()
         };
         
         public async UniTask TryGetDateTimeAsync(Action<DateTime> callback)

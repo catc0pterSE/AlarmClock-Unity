@@ -2,11 +2,10 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Data.DataSource.Mapper.WebTimeMapper;
-using Network;
 using Network.Query;
 using UnityEngine;
 
-namespace Data.DataSource.RemoteDataSource
+namespace Data.DataSource.RemoteDataSource.API
 {
     public class ApiTimeDataSource<T> : IRemoteTimeDataSource where T : class
     {
