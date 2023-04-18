@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 namespace Network.Query
 {
-    public class Query
+    public class WebTimeRequester
     {
         public async UniTask<string?> GetJson(string url)
         {

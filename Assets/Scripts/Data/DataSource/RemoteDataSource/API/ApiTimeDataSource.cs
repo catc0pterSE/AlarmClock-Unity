@@ -9,7 +9,7 @@ namespace Data.DataSource.RemoteDataSource.API
 {
     public class ApiTimeDataSource<T> : IRemoteTimeDataSource where T : class
     {
-        private readonly Query _query = new Query();
+        private readonly WebTimeRequester _webTimeRequester = new WebTimeRequester();
         private readonly IWebDtoToDateTimeMapper<T> _mapper;
         private readonly string _url;
 
@@ -21,7 +21,7 @@ namespace Data.DataSource.RemoteDataSource.API
 
         public async UniTask TryGetDateTimeAsync(Action<DateTime> callback)
         {
-            string? json = await _query.GetJson(_url);
+            string? json = await _webTimeRequester.GetJson(_url);
             
             if (string.IsNullOrEmpty(json))
                 throw new NullReferenceException($"{GetType()} {_url} json is null ");
